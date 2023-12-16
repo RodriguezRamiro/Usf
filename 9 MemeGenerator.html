@@ -1,0 +1,56 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Maker</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="bg-dark text-white text-center p-4">
+        <h1>Meme Creatonator!</h1>
+    </header>
+
+    <!-- Meme Generator Section -->
+    <section id="meme-generator" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="memeForm">
+                    <div class="form-group">
+                        <label for="topText">Top Text:</label>
+                        <input type="text" class="form-control" id="topText" placeholder="Enter top text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bottomText">Bottom Text:</label>
+                        <input type="text" class="form-control" id="bottomText" placeholder="Enter bottom text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageURL">Image URL:</label>
+                        <input type="url" class="form-control" id="imageURL" placeholder="Enter image URL" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Generate Meme</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meme Display Section -->
+    <section id="meme-display" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div id="memeContainer" class="text-center">
+                    <img id="memeImage" src="" alt="Meme Image">
+                    <h2 id="memeTopText"></h2>
+                    <h2 id="memeBottomText"></h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS -->
+    <script src="MemeGenerator.js"></script>
+</body>
+</html>
