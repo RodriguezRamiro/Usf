@@ -1,0 +1,26 @@
+-Es5 global constants
+var PI = 3.14;
+PI = 42; // stop me from doing this!
+
+const PI = 3.14
+
+
+- What is the difference between ***var*** and ***let***?
+var and let are keywords in JS taht can  be used to declare and reassing variables, but let does not allow
+to be redeclared.
+var is accesible with a housted variable while tel creates a block scope.
+
+
+- What is the difference between **var** and ***const***?
+var can be reassinged and redeclared while const can not be. const creates a block scope while
+var can be accessed with a hoisted variable.
+
+
+- What is the difference between **let** and **const**?
+let can be reassinged but const does not allow to be redeclared or reassinged.
+
+
+- What is hoisting?
+hoisting is the way we explain how the Js compl=iler works. variables are lifted to the top of the scope inwhich they are declared in.
+when using var, the vraibale name and its undefined value can be accessed before it is used later.
+funcitons are also hoisted and called before defining them in a codebase.
