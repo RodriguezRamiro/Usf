@@ -1,0 +1,24 @@
+#board td{
+    width: 5px;
+    height: 50%;
+    border: solid 1px #666;
+}
+
+/* pieces are div within fame table cells: draw as colored circles*/
+
+.pieces{
+    margin: 5px;
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+}
+
+/*column-top is table row clickable areas for each column */
+
+#column-top td{
+    border: dashed 1px lightgray;;
+}
+
+#colmn-top td:hover{
+    background-color: gold;
+}
