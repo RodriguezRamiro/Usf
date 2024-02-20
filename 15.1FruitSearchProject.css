@@ -1,0 +1,86 @@
+* {
+  /* box-sizing: border-box; */
+  box-sizing: border-box;
+}
+
+:focus {
+ /* TODO */
+outline: none;
+}
+
+body {
+  /* TODO */
+  font-family:Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+input {
+ /* TODO */
+ padding: 10px;
+ border: 1px solid #ccc;
+ border-radius: 5px;
+ font-size: 16px;
+ width: 16px;
+ width: 100%;
+ margin-bottom: 10px;
+ box-shadow: none;
+
+}
+
+.search-container {
+ /* TODO */
+ max-width: 600px;
+ margin: 50px auto;
+ padding: 20px;
+ background-color:#fff;
+ border-radius:10px;
+ box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+}
+.search-container input,
+.search-container .suggestions {
+  /* TODO */
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+.search-container input {
+ /* TODO */
+ border-radius: 5px;
+}
+.search-container .suggestions {
+   /* TODO */
+   display: none;
+}
+
+ul {
+  /* TODO */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0, 0, 0.1);
+}
+ul.has-suggestions {
+  /* TODO */
+  display: block;
+}
+ul li {
+  /* TODO */
+  padding: 10px;
+
+}
+ul li:hover {
+  /* TODO */
+  background-color: #f0f0f0;
+}
+
+input {
+   /* TODO */
+   transition: 0.3s ease-in-out;
+}
+
+input:focus{
+  border-color: dodgerblue;
+}
