@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Create a New Playlist</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.playlist_name.label }} {{ form.playlist_name(class="form-control") }}
+    <button type="submit" class="btn btn-primary">Create Playlist</button>
+  </form>
+
+{% endblock %}
