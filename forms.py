@@ -1,30 +1,36 @@
-"""Forms for playlist app."""
-
-from wtforms import SelectField
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
-
-class PlaylistForm(FlaskForm):
-    """Form for adding playlists."""
-
-    # Add the necessary code to use this form
-    playlist_name = StringField('Playlist Name', validators=[DataRequired()])
-    submit = SubmitField('Create Playlist')
+from wtforms import StringField, PasswordField, TextAreaField
+from wtforms.validators import DataRequired, Email, Length
 
 
-class SongForm(FlaskForm):
-    """Form for adding songs."""
+class MessageForm(FlaskForm):
+    """Form for adding/editing messages."""
 
-    # Add the necessary code to use this form
-    title = StringField('Song Title', validators=[DataRequired()])
-    artist = StringField('Artist')
-    submit = SubmitField('Add Song')
+    text = TextAreaField('text', validators=[DataRequired()])
 
 
-# DO NOT MODIFY THIS FORM - EVERYTHING YOU NEED IS HERE
-class NewSongForPlaylistForm(FlaskForm):
-    """Form for adding a song to playlist."""
+class UserAddForm(FlaskForm):
+    """Form for adding users."""
 
-    song = SelectField('Song To Add', coerce=int)
-    submit = SubmitField('Add Song to Playlist')
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('E-mail', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[Length(min=6)])
+    image_url = StringField('(Optional) Image URL')
+
+
+class UserEditionForm(FlaskForm):
+    """editing users form"""
+
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('E-mail', validators=[DataRequired(), Email()])
+    image_url = StringField('(Optimal) header Image URL')
+    bio = TextAreaField('Optional) Tell us about yourself')
+    password = PasswordField('Password', validators=[Length(min=6)])
+
+
+
+class LoginForm(FlaskForm):
+    """Login form."""
+
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[Length(min=6)])
