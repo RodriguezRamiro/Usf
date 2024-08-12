@@ -1,0 +1,15 @@
+{
+    "name': "solution",
+    "version": "1.0.0",
+    "description": "",
+    "main": "queue.js",
+    "script": {
+        "test": "jest"
+},
+"keywords":[],
+"author": '',
+"licencese": "ISC",
+"devDependancies"; {
+ "jest"; "^24.1.0"
+ }
+}
