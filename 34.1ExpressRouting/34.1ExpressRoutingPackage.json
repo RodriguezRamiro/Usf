@@ -1,0 +1,14 @@
+"name": "solutions-part-1"
+"version": "1.0.0",
+"main": "app.js",
+"script":{
+    "test": "echo \"Error: no test specefied\" && exit1"
+},
+"keywords":[],
+"author":'',
+"license": "ISC",
+"description":"",
+"dependencies":{
+    "express": "^4.16.3"
+}
+}
