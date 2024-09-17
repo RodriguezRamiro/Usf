@@ -1,0 +1,48 @@
+/* Base styles for the cell */
+.Cell {
+  height: 100px;
+  width: 100px;
+  background-color: darkgray;
+  cursor: pointer;
+  border: 2px solid #333;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+}
+
+/* Lit cells will appear brighter */
+.Cell-lit {
+  background-color: #ffff88;
+  box-shadow: 0 0 10px rgba(255, 255, 136, 0.6);
+}
+
+/* Hover effect to give feedback when mousing over cells */
+.Cell:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+/* Add a subtle animation when flipping */
+.Cell-lit, .Cell {
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+}
+
+/* Style the board table */
+table.Board {
+  margin: 20px auto;
+  border-spacing: 10px; /* Add spacing between the cells */
+  padding: 10px;
+  border: none;
+}
+
+/* Add responsive design for smaller screens */
+@media (max-width: 600px) {
+  .Cell {
+    height: 60px;
+    width: 60px;
+  }
+
+  table.Board {
+    border-spacing: 5px;
+  }
+}
