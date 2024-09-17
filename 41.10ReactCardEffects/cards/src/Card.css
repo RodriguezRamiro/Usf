@@ -1,0 +1,27 @@
+.Card {
+  position: relative; /* Use relative positioning for better control */
+  width: 100px; /* Adjust width as needed */
+  height: 140px; /* Adjust height as needed */
+  border: 1px solid #ddd; /* Light border around the card */
+  border-radius: 8px; /* Rounded corners for a softer look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  overflow: hidden; /* Ensures the content doesn’t overflow the card */
+  background-color: #fff; /* Background color for the card */
+  text-align: center; /* Center-aligns text within the card */
+  display: flex; /* Use flexbox for centering content */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+}
+
+.Card img {
+  max-width: 100%; /* Ensure the image fits within the card */
+  max-height: 100%; /* Ensure the image fits within the card */
+  display: block; /* Remove any extra space below the image */
+}
+
+.Card-name {
+  font-size: 16px; /* Font size for the card name */
+  font-weight: bold; /* Make the card name bold */
+  color: #333; /* Dark color for the text */
+  margin-top: 8px; /* Space above the card name */
+}
