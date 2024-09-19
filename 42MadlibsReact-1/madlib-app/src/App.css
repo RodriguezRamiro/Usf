@@ -1,0 +1,100 @@
+/* Basic styling for the entire app */
+.App {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styling the header of the app */
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  width: 100%;
+  color: white;
+  margin-bottom: 40px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+/* Styling the form */
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  margin: 0 auto;
+}
+
+/* Styling the input fields */
+input {
+  width: 90%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Submit button styling */
+button {
+  padding: 10px 15px;
+  margin-top: 20px;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: #21a1f1;
+}
+
+/* Story display */
+.story-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  text-align: left;
+  max-width: 500px;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+/* Story selection */
+.story-selector {
+  margin-bottom: 20px;
+}
+
+label, select {
+  font-size: 1rem;
+}
+
+/* Restart button styling */
+button.restart {
+  background-color: #ff6347;
+}
+
+button.restart:hover {
+  background-color: #e5563d;
+}
