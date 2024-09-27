@@ -1,0 +1,76 @@
+/* some colors you may find useful:
+  #115ff4
+  #060ce9
+  #28a200
+  #8d2ab5
+  #74119c
+*/
+
+/* Styles for the body */
+body {
+  font-family: 'Copse', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000; /* Background color for the page */
+  color: white;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Style for the table */
+#jeopardy-board {
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#jeopardy-board, #jeopardy-board td, #jeopardy-board th {
+  border: 2px solid #fff;
+}
+
+#jeopardy-board td, #jeopardy-board th {
+  width: 100px;
+  height: 60px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #0000FF; /* Blue background */
+  color: white; /* White text */
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#jeopardy-board th {
+  height: 80px;
+  font-size: 18px;
+}
+
+#jeopardy-board td {
+  font-size: 24px;
+}
+
+#jeopardy-board td:hover {
+  background-color: #0033CC; /* Lighter blue on hover */
+}
+
+/* Loading spinner */
+#loading-spinner {
+  color: yellow;
+  font-size: 24px;
+}
+
+/* Button styling */
+#restart-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+#restart-btn:hover {
+  background-color: #0056b3;
+}
