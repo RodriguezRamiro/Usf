@@ -2,7 +2,7 @@ import React from 'react';
 
 const StorySelectorComponent = ({ setStoryTemplate }) => {
   const handleSelectChange = (e) => {
-    setStoryTemplate(e.target.value); // Pass the selected template to parent component
+    setStoryTemplate(e.target.value); 
   };
 
   return (

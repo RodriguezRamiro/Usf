@@ -4,7 +4,7 @@ const FormComponent = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     noun: '',
     verb: '',
-    adjective: '', // In case you need it for more complex templates
+    adjective: '',
   });
 
   // Update form state on input change
@@ -42,7 +42,7 @@ const FormComponent = ({ onSubmit }) => {
         value={formData.verb}
         onChange={handleChange}
       />
-      {/* Optional field based on template */}
+      {}
       <input
         type="text"
         name="adjective"

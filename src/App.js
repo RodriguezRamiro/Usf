@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Madlib from './Madlib'; // Import the Madlib component
+import Madlib from './Madlib';
 
 function App() {
   return (
     <div className="App">
-      {/* Render the Madlib component */}
+      {}
       <Madlib />
     </div>
   );
