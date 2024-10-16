@@ -1,0 +1,28 @@
+/* Menu.css */
+
+.menu {
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ff0000;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .menu-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .menu-item {
+    margin: 10px 0;
+  }
+
+  .menu-link {
+    text-decoration: none;
+    color: #007bff; /* Bootstrap primary color */
+    font-weight: bold;
+  }
+
+  .menu-link:hover {
+    text-decoration: underline;
+  }

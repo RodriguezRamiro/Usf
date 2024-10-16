@@ -1,0 +1,19 @@
+/* Home.css*/
+
+.home-section {
+    background-color: #fd7f7f; /* Optional: add a background color */
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .home-section .card {
+    border: none; /* Optional: remove the card border for a cleaner look */
+  }
+
+  .home-section h3 {
+    color: #000000; /* Text color */
+  }
+
+  .home-section p {
+    color: #000000; /* Description color */
+  }
