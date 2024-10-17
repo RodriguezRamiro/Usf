@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header class="bg-dark text-white text-center p-4">
+        <h1>Meme Creationator!</h1>
+    </header>
+
+    <section id="meme-generator" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="memeForm">
+                    <div class="form-group">
+                        <label for="topText">Top Text:</label>
+                        <input type="text" class="form-control" id="topText" placeholder="Enter top text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bottomText">Bottom Text:</label>
+                        <input type="text" class="form-control" id="bottomText" placeholder="Enter bottom text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageURL">Image URL:</label>
+                        <input type="url" class="form-control" id="imageURL" placeholder="Enter image URL" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Generate Meme</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="meme-display" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <div id="memeList" style="margin-top: 20px;"></div>
+                <div id="memeContainer" style="position: relative; display: inline-block;">
+                    <img id="memeImage" src="https://via.placeholder.com/400x300.png?text=Your+Meme+Here" alt="Meme Image" style="display: none;">
+                    <h2 id="memeTopText" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"></h2>
+                    <h2 id="memeBottomText" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"></h2>
+                </div>
+                <button id="deleteButton" class="btn btn-danger mt-3" style="display: none;">Delete Meme</button>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="9 MemeGenerator.js"></script>
+</body>
+</html>
