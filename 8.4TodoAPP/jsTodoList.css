@@ -18,7 +18,7 @@ body {
 /* Title Styling */
 h2 {
     text-align: center;
-    color: #333;
+    color: #333333;
 }
 
 /* Input Field */
@@ -47,8 +47,49 @@ input[type="text"]:focus {
     border-radius: 4px;
     transition: background-color 0.3s;
 
-.task:hover {
-    background-color: #eaeaea;
+
+/* Add this style */
+.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+/* style for completed tasks */
+.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+/* Complete Button */
+.complete-button {
+    cursor: pointer;
+    background-color: #4c89af;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+.complete-button:hover {
+    background-color: #45a049;
+}
+
+/* Delete Button */
+.delete-button {
+    cursor: pointer;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-left: 5px;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
 }
 
 /* Delete Button */
@@ -69,6 +110,6 @@ input[type="text"]:focus {
 /* Media Queries for Responsiveness */
 @media (max-width: 500px) {
     #todo-list {
-        width: 90%; 
+        width: 90%;
     }
 }
