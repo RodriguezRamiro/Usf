@@ -112,17 +112,31 @@ async function fillTable() {
  * */
 
 function handleClick(evt) {
+  // Prevent default event propagation
+  evt.stopPropagation();
+
     const id = evt.target.id;
     const [categoryIndex, clueIndex] = id.split("-").map(Number);
     const clue = categories[categoryIndex].clues[clueIndex];
 
+
+  //  console.log("Clue before click:", clue);
+
+    if (clue.showing === "answer") {
+      return; // Ignore any further clicks once the answer is shown
+  }
+
     if (!clue.showing) {
       $(evt.target).text(clue.question);
       clue.showing = "question";
+//     console.log("showing Question:", clue.question);
     } else if (clue.showing === "question") {
       $(evt.target).text(clue.answer);
       clue.showing = "answer";
+//     console.log("Showing answer:", clue.answer);
     }
+
+//    console.log("Clue after click:", clue)
 }
 
 /** Wipe the current Jeopardy board, show the loading spinner,
