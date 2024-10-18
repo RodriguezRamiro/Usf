@@ -1,36 +1,43 @@
+"""Forms for playlist app."""
+
+from wtforms import SelectField, StringField, TextAreaField, SubmitField
+from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms_alchemy import model_form_factory
+from models import db, Song, PlaylistSong
+
+BaseModelForm = model_form_factory(FlaskForm)
+class ModelForm(BaseModelForm):
+    """Base form for using SQLAlchemy models with FlaskForm."""
+    @classmethod
+    def get_session(cls):
+        """Get the database session for use with wtforms_alchemy."""
+        return db.session
+
+class PlaylistForm(FlaskForm):
+    """Form for adding playlists."""
+    name = StringField('Playlist Name', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    submit = SubmitField('Add Playlist')
 
 
-class MessageForm(FlaskForm):
-    """Form for adding/editing messages."""
+class SongForm(ModelForm):
+    """Form for adding songs."""
+    title = StringField('Song Title', validators=[DataRequired()])
+    artist = StringField('Artist', validators=[DataRequired()])
+    submit = SubmitField('Add Song')
 
-    text = TextAreaField('text', validators=[DataRequired()])
-
-
-class UserAddForm(FlaskForm):
-    """Form for adding users."""
-
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('E-mail', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[Length(min=6)])
-    image_url = StringField('(Optional) Image URL')
+    class Meta:
+        model = Song
 
 
-class UserEditionForm(FlaskForm):
-    """editing users form"""
+# DO NOT MODIFY THIS FORM - EVERYTHING YOU NEED IS HERE
+class NewSongForPlaylistForm(FlaskForm):
+    """Form for adding a song to playlist."""
 
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('E-mail', validators=[DataRequired(), Email()])
-    image_url = StringField('(Optimal) header Image URL')
-    bio = TextAreaField('Optional) Tell us about yourself')
-    password = PasswordField('Password', validators=[Length(min=6)])
+    song_id = SelectField('Song To Add', coerce=int)
+    submit = SubmitField('Add Song')
 
-
-
-class LoginForm(FlaskForm):
-    """Login form."""
-
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[Length(min=6)])
+    class Meta:
+        model = PlaylistSong
+        include = ['song_id']
