@@ -51,18 +51,24 @@ class MessageViewTestCase(TestCase):
 
         db.session.commit()
 
+    def tearDown(self):
+        """Clean up after tests."""
+        db.session.remove()
+        db.drop_all()
+        db.create_all()
+
     def test_add_message(self):
         """Can use add a message?"""
 
-        # Since we need to change the session to mimic logging in,
-        # we need to use the changing-session trick:
+        # change the session to mimic logging in,
+
 
         with self.client as c:
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.testuser.id
 
-            # Now, that session setting is saved, so we can have
-            # the rest of ours test
+            # session setting is saved,
+            # rest of test
 
             resp = c.post("/messages/new", data={"text": "Hello"})
 
@@ -71,3 +77,42 @@ class MessageViewTestCase(TestCase):
 
             msg = Message.query.one()
             self.assertEqual(msg.text, "Hello")
+
+    def test_view_message(self):
+        """Test if a user can view a message after adding it."""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.testuser.id
+
+            # Create a message
+            c.post("/messages/new", data={"text": "Hello"})
+
+            # access the messages page to see if the message appears
+            resp = c.get("/messages")
+
+            self.assertIn(b"Hello", resp.data)  # Check if the message text is in the response
+
+    def test_delete_message(self):
+        """Test if a user can delete their message."""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.testuser.id
+
+            # Create a message to delete
+            c.post("/messages/new", data={"text": "This will be deleted"})
+
+            msg = Message.query.one()
+            msg_id = msg.id
+
+            # delete the message
+            resp = c.post(f"/messages/{msg_id}/delete")
+
+            self.assertEqual(resp.status_code, 302)  # Should redirect after deletion
+            self.assertIsNone(Message.query.get(msg_id))  # Ensure the message is gone
+
+    def test_add_message_unauthenticated(self):
+        """Test adding a message without being logged in."""
+        resp = self.client.post("/messages/new", data={"text": "Hello"})
+
+        # Expect a redirect to the login or an error page
+        self.assertEqual(resp.status_code, 302)  # Redirect for unauthenticated access

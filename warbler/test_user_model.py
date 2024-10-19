@@ -12,7 +12,7 @@ from models import db, User, Message, Follows
 # Set environmental variable for the test database
 os.environ['DATABASE_URL'] = "postgresql:///warbler-test"
 
-# Now we can import the app
+# import the app
 from app import app
 
 # Create all tables (only once for all tests)
@@ -42,9 +42,13 @@ class UserModelTestCase(TestCase):
 
     def tearDown(self):
         """Clean up fouled transactions after each test."""
-        res = super().tearDown()
-        db.session.rollback()
-        return res
+        try:
+            db.session.rollback()
+        except Exception as e:
+            print(f"Error during rollback: {e}")
+        finally:
+            db.drop_all()
+            db.create_all()
 
     def test_user_model(self):
         """Test basic user model functionality."""

@@ -2,7 +2,7 @@
 import os
 from unittest import TestCase
 from models import db, connect_db, Message, User, Likes, Follows
-from bs4 import BeautifulSoup
+
 
 # Set an environmental variable to use a test database before importing the app
 os.environ['DATABASE_URL'] = "postgresql:///warbler-test"
@@ -49,9 +49,13 @@ class UserViewTestCase(TestCase):
 
     def tearDown(self):
         """Clean up any fouled transactions."""
-        resp = super().tearDown()
-        db.session.rollback()
-        return resp
+        try:
+            db.session.rollback()
+        except Exception as e:
+            print(f"Error during rollback: {e}")
+        finally:
+            db.drop_all()
+            db.create_all()
 
     def test_users_index(self):
         """Test that the user index displays all users."""

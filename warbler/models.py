@@ -5,6 +5,7 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
+
 bcrypt = Bcrypt()
 db = SQLAlchemy()
 
@@ -115,6 +116,8 @@ class User(db.Model):
         secondary="likes"
     )
 
+
+
     def __repr__(self):
         return f"<User #{self.id}: {self.username}, {self.email}>"
 
@@ -211,6 +214,9 @@ class Message(db.Model):
     )
 
     user = db.relationship('User')
+
+    # Relationship to the Likes model
+    likes = db.relationship('Likes', backref='message', cascade='all, delete-orphan')
 
 
 def connect_db(app):

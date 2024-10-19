@@ -36,9 +36,8 @@ class MessageModelTestCase(TestCase):
 
     def tearDown(self):
         """Clean up after tests."""
-        res = super().tearDown()
-        db.session.rollback()
-        return res
+        db.session.remove()
+        db.drop_all()
 
     def test_message_model(self):
         """Test basic message model functionality."""
@@ -78,4 +77,37 @@ class MessageModelTestCase(TestCase):
         self.assertEqual(likes[0].message_id, m1.id)
 
     # Additional tests could be added here, e.g., for message deletion or user liking their own messages
+    def test_message_creation_without_text(self):
+        """Test that a message cannot be created without text."""
+        with self.assertRaises(exc.IntegrityError):
+            m = Message(user_id=self.uid)  # No text provided
+            db.session.add(m)
+            db.session.commit()
+
+    def test_user_liking_own_message(self):
+        """Test that a user cannot like their own message."""
+        m = Message(text="another warble", user_id=self.uid)
+        db.session.add(m)
+        db.session.commit()
+
+        # Attempt to like their own message
+        self.u.likes.append(m)
+        db.session.commit()
+
+        # Assuming your application logic prevents this, check that the like was not added
+        likes = Likes.query.filter(Likes.user_id == self.uid).all()
+        self.assertEqual(len(likes), 0)
+
+    def test_message_deletion(self):
+        """Test that a message can be deleted."""
+        m = Message(text="delete this message", user_id=self.uid)
+        db.session.add(m)
+        db.session.commit()
+
+        # Delete the message
+        db.session.delete(m)
+        db.session.commit()
+
+        # Ensure that the message no longer exists
+        self.assertIsNone(Message.query.get(m.id))
 

@@ -3,10 +3,8 @@ import os
 from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
-
 from forms import UserAddForm, LoginForm, MessageForm, ProfileEditForm, ChangePasswordForm
-from models import db, connect_db, User, Message, Likes
-
+from models import db, connect_db, User, Follows, Message, Likes
 CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
@@ -23,6 +21,10 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
+
+# Initialize app context for database connection and create tables
+with app.app_context():
+    db.create_all()
 
 def check_auth(f):
     def wrapper(*args, **kwargs):
@@ -131,12 +133,31 @@ def logout():
 ##############################################################################
 # General user routes:
 
-@app.route('/users')
+@app.route('/users', methods=["GET", "POST"])
 def list_users():
     """Page with listing of users.
 
     Can take a 'q' param in querystring to search by that username.
     """
+
+    if request.method == "POST":
+        # Handle user creation logic here
+        form = UserAddForm()  # Ensure form defined for adding users
+        if form.validate_on_submit():
+            try:
+                user = User.signup(
+                    username=form.username.data,
+                    password=form.password.data,
+                    email=form.email.data,
+                    image_url=form.image_url.data or User.image_url.default.arg,
+                )
+                db.session.commit()
+                flash("User created successfully!", "success")
+                return redirect("/users")
+
+            except IntegrityError:
+                flash("Username already taken", "danger")
+                return render_template('users/index.html', form=form)
 
     search = request.args.get('q')
 
@@ -166,6 +187,19 @@ def users_show(user_id):
     return render_template('users/show.html', user=user, messages=messages)
 
 
+# liked warbles route
+@app.route('/users/<int:user_id>/liked_warbles')
+@check_auth
+def liked_warbles(user_id):
+    """Show liked warbles for a specific user."""
+    user = User.query.get_or_404(user_id)
+
+    # fetch liked messages
+    liked_warbles = Message.query.join(Likes).filter(Likes.user_id == user_id).all()
+
+    return render_template('users/liked_warbles.html', user=user, liked_warbles=liked_warbles)
+
+
 @app.route('/users/<int:user_id>/following')
 @check_auth
 def show_following(user_id):
@@ -190,6 +224,8 @@ def users_followers(user_id):
 
     user = User.query.get_or_404(user_id)
     return render_template('users/followers.html', user=user)
+
+
 
 @app.route('/users/<int:user_id>/likes')
 @check_auth
@@ -306,15 +342,35 @@ def change_password():
 @check_auth
 def delete_user():
     """Delete user."""
-
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
     do_logout()
 
-    db.session.delete(g.user)
-    db.session.commit()
+    try:
+        user_to_delete = User.query.get(g.user.id)
+        if not user_to_delete:
+            flash("User not found.", "danger")
+            return redirect("/")
+
+        # Delete messages associated with the user
+        Message.query.filter_by(user_id=user_to_delete.id).delete(synchronize_session='fetch')
+
+        # Delete related follows entries
+        Follows.query.filter(
+            (Follows.user_following_id == user_to_delete.id) |
+            (Follows.user_being_followed_id == user_to_delete.id)
+        ).delete(synchronize_session='fetch')
+
+        # Delete the user
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash("User deleted successfully.", "success")
+    except Exception as e:
+        db.session.rollback()  # Rollback in case of error
+        app.logger.error(f"Error deleting user: {str(e)}")
+        flash("An error occurred while deleting the user.", "danger")
 
     return redirect("/signup")
 
@@ -323,22 +379,31 @@ def delete_user():
 def like_message(message_id):
     """Like a message."""
 
-    likes = [like.id for like in g.user.likes]
-    if message_id not in likes:
+    # Fetch the message or return a 404 if not found
+    message = Message.query.get_or_404(message_id)
+
+    # Check if the user is trying to like their own message
+    if message.user_id == g.user.id:
+        flash("You cannot like your own warble!", "error")
+        return redirect(f"/messages/{message_id}")
+
+    # Check if the user has already liked the message
+    existing_like = Likes.query.filter_by(user_id=g.user.id, message_id=message_id).first()
+
+    if not existing_like:
+        # If the user has not liked it yet, create a new like
         like = Likes(user_id=g.user.id, message_id=message_id)
-
         db.session.add(like)
-
-        db.session.commit()
-
+        flash("Warble liked!", "success")
     else:
-        like = Likes.query.filter(Likes.user_id==g.user.id, Likes.message_id==message_id).first()
+        # If the user has already liked it, remove the like
+        db.session.delete(existing_like)
+        flash("Warble unliked!", "info")
 
-        db.session.delete(like)
-        db.session.commit()
+    # Commit the session
+    db.session.commit()
 
-
-    return redirect("/")
+    return redirect(f"/messages/{message_id}")
 
 
 ##############################################################################
@@ -373,7 +438,12 @@ def messages_show(message_id):
     """Show a message."""
 
     msg = Message.query.get(message_id)
-    return render_template('messages/show.html', message=msg)
+    # Check if the user has liked the message
+    user_liked = False
+    if g.user:
+        user_liked = any(like.user_id == g.user.id for like in msg.likes)
+
+    return render_template('messages/show.html', message=msg, user_liked=user_liked)
 
 
 @app.route('/messages/<int:message_id>/delete', methods=["POST"])
@@ -440,4 +510,4 @@ def add_header(req):
 def page_not_found(e):
     """NOT FOUND page 404 ERROR"""
 
-    return render_template('404.html'), 404
+    return render_template('users/404.html'), 404
